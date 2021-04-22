@@ -22,20 +22,23 @@ class main {
             } else {
                 switch (opcao) {
                 case 1:
-                    reservar(cliente, reserva,contador);
+                    reservar(cliente, reserva, contador);
                     break;
 
                 case 2:
-                pesquisar(reserva);
+                    pesquisar(reserva);
                     break;
 
-                case 3: imprimirReservas();
+                case 3:
+                    imprimirReservas();
                     break;
 
-                case 4:imprimirEspera();
+                case 4:
+                    imprimirEspera();
                     break;
 
-                case 5:cancelarReserva(reserva);
+                case 5:
+                    cancelarReserva(reserva);
                     break;
 
                 }
