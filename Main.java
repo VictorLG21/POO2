@@ -6,7 +6,7 @@ class main {
     public static void main(String[] args) {
         List<Reserva> reserva = new ArrayList<>();
         int opcao = 0;
-        int contador = 0;
+        int contador = 1;
         Scanner teclado = new Scanner(System.in);
 
         do {
@@ -31,24 +31,16 @@ class main {
                 case 1:
                     if (contador <= 6) {
                         reserva.add(reservar());
+                        System.out.println(reserva.get(0));
                         contador++;
                     } else {
-                        int op;
-                        do {
-                            System.out.println(
-                                    "Você será colocado na lista de espera. Deseja continuar? \n 1.Sim \n2.Não");
-                            op = teclado.nextInt();
-                            switch (op) {
-                            case 1:
-                                reserva.add(reservar());
-                                contador++;
-                                break;
-                            case 2:
-                                System.out.println("Obrigado, volte sempre!");
-                                break;
-                            }
-                        } while (op != 2);
+
+                        System.out.println("Você será colocado na lista de espera");
+                        reserva.add(reservar());
+                        contador++;
+
                     }
+
                     break;
 
                 case 2:
@@ -76,6 +68,7 @@ class main {
 
         } while (opcao != 6);
         teclado.close();
+
     }
 
     private static Reserva reservar() {
@@ -91,8 +84,10 @@ class main {
         case 2:
             cliente = cadastrarPj();
         }
+        System.out.println("Informe seu nome");
+        String nome = teclado.next();
+        cliente.setNome(nome);
         aux.setCliente(cliente);
-
         int opc;
 
         do {
@@ -113,7 +108,7 @@ class main {
 
             }
         } while (opc != 1 && opc != 2);
-        teclado.close();
+
         return aux;
     }
 
@@ -122,11 +117,9 @@ class main {
 
         System.out.println("Informe seu cnpj");
         String cnpj = teclado.nextLine();
-        System.out.println("Informe seu nome");
-        String nome = teclado.nextLine();
-        PessoaJuridica aux = new PessoaJuridica(cnpj);
-        aux.setNome(nome);
-        teclado.close();
+
+        PessoaJuridica aux = new PessoaJuridica("");
+        aux.setCnpj(cnpj);
         return aux;
     }
 
@@ -135,11 +128,9 @@ class main {
 
         System.out.println("Informe seu cpf");
         String cpf = teclado.nextLine();
-        System.out.println("Informe seu nome");
-        String nome = teclado.nextLine();
-        PessoaFisica aux = new PessoaFisica(cpf);
-        aux.setNome(nome);
-        teclado.close();
+
+        PessoaFisica aux = new PessoaFisica("");
+        aux.setCpf(cpf);
         return aux;
     }
 
@@ -148,32 +139,43 @@ class main {
         System.out.println("Informe o cpf ou o cnpj a ser buscado");
         String busca = teclado.nextLine();
         boolean valida = false;
+        Cliente cliente = null;
+
         for (int i = 0; i < reserva.size(); i++) {
+
             if (reserva.get(i).getCliente() instanceof PessoaFisica) {
-                PessoaFisica pf = (PessoaFisica) reserva;
+                cliente = reserva.get(i).getCliente();
+                PessoaFisica pf = (PessoaFisica) cliente;
                 if (pf.getCpf().equals(busca)) {
-                    System.out.println(reserva.get(i) + "" + pf + " Possui uma reserva");
+                    System.out.println(reserva.get(i) + " Possui uma reserva");
                     valida = true;
                 }
             } else if (reserva.get(i).getCliente() instanceof PessoaJuridica) {
-                PessoaJuridica pj = (PessoaJuridica) reserva;
+                cliente = reserva.get(i).getCliente();
+                PessoaJuridica pj = (PessoaJuridica) cliente;
                 if (pj.getCnpj().equals(busca)) {
-                    System.out.println(reserva.get(i) + "" + pj + " Possui uma reserva");
+                    System.out.println(reserva.get(i) + " Possui uma reserva");
                     valida = true;
                 }
-            } else if (!valida) {
+            } else if (valida == false) {
                 System.out.println("Cpf/Cnpj informado não possui reserva!");
             }
 
         }
 
-        teclado.close();
     }
 
     private static void imprimirReservas(List<Reserva> reserva) {
         System.out.println("---Lista de Reservas---");
-        for (int i = 0; i < 6; i++) {
-            System.out.println(reserva.get(i));
+        if (reserva.size() < 6) {
+            for (int i = 0; i < reserva.size(); i++) {
+                System.out.println(reserva.get(i));
+
+            }
+        } else {
+            for (int i = 0; i < 6; i++) {
+                System.out.println(reserva.get(i));
+            }
         }
     }
 
@@ -189,21 +191,22 @@ class main {
     private static int cancelarReserva(List<Reserva> reserva) {
         int x = -58;
         Scanner teclado = new Scanner(System.in);
-        System.out.println("Informe o cpf ou o cnpj a ser buscado");
+        System.out.println("Informe o cpf ou o cnpj a ser cancelado");
         String busca = teclado.nextLine();
         boolean valida = false;
         for (int i = 0; i < reserva.size(); i++) {
             if (reserva.get(i).getCliente() instanceof PessoaFisica) {
-                PessoaFisica pf = (PessoaFisica) reserva;
+                PessoaFisica pf = (PessoaFisica) reserva.get(i).getCliente();
+                System.out.println("Cpf" + pf.getCpf());
                 if (pf.getCpf().equals(busca)) {
-                    System.out.println(reserva.get(i) + "\nSerá removido");
+                    System.out.println("Reserva de: " + reserva.get(i) + " Será cancelado");
                     x = i;
                     valida = true;
                 }
             } else if (reserva.get(i).getCliente() instanceof PessoaJuridica) {
-                PessoaJuridica pj = (PessoaJuridica) reserva;
+                PessoaJuridica pj = (PessoaJuridica) reserva.get(i).getCliente();
                 if (pj.getCnpj().equals(busca)) {
-                    System.out.println(reserva.get(i) + "\nSerá removido");
+                    System.out.println("Reserva de: " + reserva.get(i) + " Será cancelado");
                     x = i;
                     valida = true;
                 }
@@ -213,7 +216,6 @@ class main {
 
         }
 
-        teclado.close();
         return x;
     }
 

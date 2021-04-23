@@ -22,6 +22,12 @@ public class Reserva implements Pagamento {
 
     @Override
     public String toString() {
-        return "---Cliente---\n" + cliente + ", " + cliente.getClass() + ", " + pagamentoAVista;
+        if (pagamentoAVista == true) {
+            String opcao = "pagamento será a vista!";
+            return cliente + ", " + cliente.getClass() + ", " + opcao;
+        } else {
+            String opcao = "Pagamento será parcelado!";
+            return cliente + ", " + cliente.getClass() + ", " + opcao;
+        }
     }
 }

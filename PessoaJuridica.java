@@ -1,6 +1,5 @@
 public class PessoaJuridica extends Cliente {
     private String cnpj;
-    
 
     public PessoaJuridica(String cnpj) {
         super();
@@ -15,7 +14,7 @@ public class PessoaJuridica extends Cliente {
     }
 
     @Override
-    public String toString(){
-        return  " Possui o cnpj -> " + cnpj;
+    public String toString() {
+        return getNome() + ", " + cnpj;
     }
 }
