@@ -59,6 +59,7 @@ class main {
                     int i = cancelarReserva(reserva);
                     if (i >= 0) {
                         reserva.remove(i);
+                        contador--;
                     }
 
                     break;
