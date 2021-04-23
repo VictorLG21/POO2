@@ -31,7 +31,6 @@ class main {
                 case 1:
                     if (contador <= 6) {
                         reserva.add(reservar());
-                        System.out.println(reserva.get(0));
                         contador++;
                     } else {
 
