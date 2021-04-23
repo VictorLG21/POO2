@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 class main {
     public static void main(String[] args) {
-        List<Cliente> cliente = new ArrayList<>();
         List<Reserva> reserva = new ArrayList<>();
         int opcao = 0;
         int contador = 0;
@@ -22,7 +21,24 @@ class main {
             } else {
                 switch (opcao) {
                 case 1:
-                    reservar(cliente, reserva, contador);
+                    if (contador <= 6) {
+                        reserva.add(reservar());
+                    } else {
+                        int op;
+                        do {
+                            System.out.println(
+                                    "Você será colocado na lista de espera. Deseja continuar? \n 1.Sim \n 2.Não");
+                            op = teclado.nextInt();
+                            switch (op) {
+                            case 1:
+                                reserva.add(reservar());
+                                break;
+                            case 2:
+                                System.out.println("Obrigado, volte sempre!");
+                                break;
+                            }
+                        } while (op != 2);
+                    }
                     break;
 
                 case 2:
@@ -48,7 +64,77 @@ class main {
         teclado.close();
     }
 
-    private static void reservar(List<Cliente> cliente, List<Reserva> reserva, int contador) {
+    private static Reserva reservar() {
+        Scanner teclado = new Scanner(System.in);
+        Reserva aux = new Reserva();
+        aux.setCliente(cadastrarCliente());
+
+        int op;
+        do {
+            System.out.println("Pagamento será a vista? \n 1.Sim \n 2.Não");
+            op = teclado.nextInt();
+            if (op != 1 && op != 2) {
+                System.out.println("Opção inválida");
+            } else {
+                switch (op) {
+                case 1:
+                    aux.setPagamentoAVista(true);
+                    break;
+                case 2:
+                    aux.setPagamentoAVista(false);
+                    break;
+                }
+
+            }
+        } while (op != 1 && op != 2);
+        teclado.close();
+        return aux;
+    }
+
+    private static Cliente cadastrarCliente() {
+        Cliente aux = null;
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("1.Pessoa Física \n 2.Pessoa Jurídica");
+        int op = teclado.nextInt();
+        do {
+            if (op != 1 && op != 2) {
+                System.out.println("Opção inválida");
+            } else {
+                switch (op) {
+                case 1:
+                    aux = cadastrarPf();
+                    break;
+                case 2:
+                    aux = cadastrarPj();
+                    break;
+                }
+
+            }
+        } while (op != 1 && op != 2);
+        System.out.println("Informe seu nome");
+        aux.setNome(teclado.nextLine());
+        teclado.close();
+        return aux;
+    }
+
+    private static Cliente cadastrarPj() {
+        Scanner teclado = new Scanner(System.in);
+
+        System.out.println("Informe seu cnpj");
+        String cnpj = teclado.nextLine();
+        PessoaJuridica aux = new PessoaJuridica(cnpj);
+        teclado.close();
+        return aux;
+    }
+
+    private static Cliente cadastrarPf() {
+        Scanner teclado = new Scanner(System.in);
+
+        System.out.println("Informe seu cpf");
+        String cpf = teclado.nextLine();
+        PessoaFisica aux = new PessoaFisica(cpf);
+        teclado.close();
+        return aux;
     }
 
     private static void pesquisar(List<Reserva> reserva) {
