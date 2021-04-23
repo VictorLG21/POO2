@@ -197,7 +197,6 @@ class main {
         for (int i = 0; i < reserva.size(); i++) {
             if (reserva.get(i).getCliente() instanceof PessoaFisica) {
                 PessoaFisica pf = (PessoaFisica) reserva.get(i).getCliente();
-                System.out.println("Cpf" + pf.getCpf());
                 if (pf.getCpf().equals(busca)) {
                     System.out.println("Reserva de: " + reserva.get(i) + " Será cancelado");
                     x = i;
