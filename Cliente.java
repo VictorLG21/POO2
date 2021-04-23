@@ -13,4 +13,8 @@ public abstract class Cliente {
         this.nome = nome;
     }
 
+    @Override
+    public String toString() {
+        return "Nome -> " + nome ;
+    }
 }

@@ -2,7 +2,7 @@ public class Reserva implements Pagamento {
     private Cliente cliente;
     private boolean pagamentoAVista;
 
-    public Cliente getcliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
@@ -22,6 +22,6 @@ public class Reserva implements Pagamento {
 
     @Override
     public String toString() {
-        return "Pessoa{" + cliente + '\'' + '}';
+        return "---Cliente---\n" + cliente + ", " + cliente.getClass() + ", " + pagamentoAVista;
     }
 }
