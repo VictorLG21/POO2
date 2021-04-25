@@ -157,7 +157,8 @@ class main {
                     System.out.println(reserva.get(i) + " Possui uma reserva");
                     valida = true;
                 }
-            } else if (valida == false) {
+            }
+            if (valida == false) {
                 System.out.println("Cpf/Cnpj informado não possui reserva!");
             }
 
@@ -209,7 +210,8 @@ class main {
                     x = i;
                     valida = true;
                 }
-            } else if (valida == false) {
+            }
+            if (valida == false) {
                 System.out.println("Cpf/Cnpj informado não possui reserva!");
             }
 
